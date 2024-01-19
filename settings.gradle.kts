@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.accessors.runtime.addDependencyTo
+
 pluginManagement {
     repositories {
         google()
