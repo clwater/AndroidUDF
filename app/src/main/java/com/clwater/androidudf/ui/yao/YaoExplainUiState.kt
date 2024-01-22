@@ -1,13 +1,13 @@
 package com.clwater.androidudf.ui.yao
 
-sealed interface YaoUiState {
-    data object Loading: YaoUiState
-    data object LoadFailed: YaoUiState
+sealed interface YaoExplainUiState {
+    data object Loading: YaoExplainUiState
+    data object LoadFailed: YaoExplainUiState
 
     data class Success(
         val base: String = "",
         val explain: String = ""
-    ): YaoUiState{
+    ): YaoExplainUiState{
         fun isEmpty() = base.isEmpty() && explain.isEmpty()
     }
 }

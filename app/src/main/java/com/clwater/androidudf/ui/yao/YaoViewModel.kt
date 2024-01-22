@@ -13,6 +13,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -26,7 +27,23 @@ class YaoViewModel @Inject constructor(
         key = SEARCH_QUERY,
         initialValue = SEARCH_MIN_FTS_ENTITY_COUNT
     )
-    val getYaoUiState: StateFlow<YaoUiState> =
+    private val currentYao = savedStateHandle.getStateFlow(
+        key = YaoS,
+        initialValue = YaoS_Default
+    )
+
+
+
+    val getYaoUIState: StateFlow<YaoBaseUiState> =
+        currentYao.flatMapLatest { query ->
+            flowOf(YaoBaseUiState(query))
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            initialValue = YaoBaseUiState(),
+        )
+
+    val getYaoExplainUiState: StateFlow<YaoExplainUiState> =
         searchQuery.flatMapLatest { query ->
 
             getYaoExplainUseCase(query)
@@ -34,28 +51,28 @@ class YaoViewModel @Inject constructor(
                 .map { result ->
                     when (result) {
                         is Result.Success ->
-                            if (YaoUiState.Success(
+                            if (YaoExplainUiState.Success(
                                     result.data.base,
                                     result.data.explain
                                 ).isEmpty()
                             ) {
-                                YaoUiState.LoadFailed
+                                YaoExplainUiState.LoadFailed
                             } else {
-                                YaoUiState.Success(
+                                YaoExplainUiState.Success(
                                     result.data.base,
                                     result.data.explain
                                 )
                             }
 
-                        is Result.Loading -> YaoUiState.Loading
-                        is Result.Error -> YaoUiState.LoadFailed
+                        is Result.Loading -> YaoExplainUiState.Loading
+                        is Result.Error -> YaoExplainUiState.LoadFailed
                     }
                 }
         }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(),
-                initialValue = YaoUiState.Loading,
+                initialValue = YaoExplainUiState.Loading,
             )
 
 
@@ -63,8 +80,27 @@ class YaoViewModel @Inject constructor(
         savedStateHandle[SEARCH_QUERY] = query
     }
 
+    fun onYaoChanged(index: Int){
+        val oldYaos = currentYao.value
+        val _YaoS = mutableListOf<Boolean>()
+        oldYaos.forEachIndexed { _index, _b ->
+            if (_index == index){
+                _YaoS.add(!_b)
+            }else{
+                _YaoS.add(_b)
+            }
+        }
+        savedStateHandle[YaoS] = _YaoS
+    }
 }
 
 
 private const val SEARCH_MIN_FTS_ENTITY_COUNT = -1
 private const val SEARCH_QUERY = "searchQuery"
+private val YaoS_Default = listOf(true,true,true,true,true,true)
+private const val YaoS = "YaoS"
+
+
+
+
+
