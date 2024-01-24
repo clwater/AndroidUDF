@@ -29,6 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 internal fun YaoScreenRoute(
     yaoViewModel: YaoViewModel = hiltViewModel()
 ) {
+    yaoViewModel.initDatabase()
     val yaoExplainUiState  by yaoViewModel.getYaoExplainUiState.collectAsStateWithLifecycle()
     val yaoUiState by yaoViewModel.getYaoUIState.collectAsStateWithLifecycle()
     YaoScreen(

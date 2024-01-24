@@ -1,6 +1,6 @@
 package com.clwater.androidudf.domain.yao
 
-import com.clwater.androidudf.data.YaoRepository
+import com.clwater.androidudf.data.repository.YaoRepository
 import com.clwater.androidudf.core.model.data.YaoExplainResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

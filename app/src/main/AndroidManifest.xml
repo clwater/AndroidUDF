@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidUDF"
         tools:targetApi="31"
-        android:name=".UDPApplication">
+        android:name=".core.UDPApplication">
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"

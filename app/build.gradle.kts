@@ -22,6 +22,12 @@ android {
         }
     }
 
+    kapt {
+        arguments{
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -87,4 +93,14 @@ dependencies {
     //KTX
     implementation("androidx.fragment:fragment-ktx:1.5.5")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+
+
+    val room_version = "2.5.0"
+    implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-paging:$room_version")
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    implementation("com.google.code.gson:gson:2.10.1")
+
 }

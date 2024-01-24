@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.clwater.androidudf.core.result.asResult
 import com.clwater.androidudf.core.result.Result
+import com.clwater.androidudf.data.repository.DefaultDatabaseRepository
 import com.clwater.androidudf.domain.yao.GetYaoExplainUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -20,6 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class YaoViewModel @Inject constructor(
+    private val defaultDatabaseRepository: DefaultDatabaseRepository,
     getYaoExplainUseCase: GetYaoExplainUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
@@ -75,6 +77,9 @@ class YaoViewModel @Inject constructor(
                 initialValue = YaoExplainUiState.Loading,
             )
 
+    fun initDatabase(){
+        defaultDatabaseRepository.guaTableInit()
+    }
 
     fun onSearchQueryChanged(query: Int) {
         savedStateHandle[SEARCH_QUERY] = query
