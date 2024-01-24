@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-internal class DefaultYaoRepository @Inject constructor() :
-    YaoRepository {
+internal class DefaultGuaRepository @Inject constructor() :
+    GuaRepository {
     override  fun getExplainInfo(index: Int): Flow<YaoExplainResult> {
         return if (index > 0){
             Thread.sleep(3000)

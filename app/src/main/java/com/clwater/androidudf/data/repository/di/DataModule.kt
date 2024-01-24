@@ -2,8 +2,8 @@ package com.clwater.androidudf.data.repository.di
 
 import com.clwater.androidudf.data.repository.DatabaseRepository
 import com.clwater.androidudf.data.repository.DefaultDatabaseRepository
-import com.clwater.androidudf.data.repository.DefaultYaoRepository
-import com.clwater.androidudf.data.repository.YaoRepository
+import com.clwater.androidudf.data.repository.DefaultGuaRepository
+import com.clwater.androidudf.data.repository.GuaRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,8 +15,8 @@ abstract class DataModule
 {
     @Binds
     internal abstract fun bindYaoRepository(
-        yaoRepository: DefaultYaoRepository,
-    ): YaoRepository
+        yaoRepository: DefaultGuaRepository,
+    ): GuaRepository
 
     @Binds
     internal abstract fun bindDatabaseRepository(

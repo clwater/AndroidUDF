@@ -1,5 +1,5 @@
-package com.clwater.androidudf.ui.yao
+package com.clwater.androidudf.ui.gua
 
-data class  YaoBaseUiState (
+data class  GuaBaseUiState (
     val yaos: List<Boolean> = listOf(true, true, true, true, true, true)
 )

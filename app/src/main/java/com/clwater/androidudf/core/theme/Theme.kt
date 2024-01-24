@@ -1,4 +1,4 @@
-package com.clwater.androidudf.ui.theme
+package com.clwater.androidudf.core.theme
 
 import android.app.Activity
 import android.os.Build

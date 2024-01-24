@@ -1,4 +1,4 @@
-package com.clwater.androidudf.ui.yao
+package com.clwater.androidudf.ui.gua
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,16 +9,12 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,15 +23,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 internal fun YaoScreenRoute(
-    yaoViewModel: YaoViewModel = hiltViewModel()
+    guaViewModel: GuaViewModel = hiltViewModel()
 ) {
-    yaoViewModel.initDatabase()
-    val yaoExplainUiState  by yaoViewModel.getYaoExplainUiState.collectAsStateWithLifecycle()
-    val yaoUiState by yaoViewModel.getYaoUIState.collectAsStateWithLifecycle()
+    guaViewModel.initDatabase()
+    val yaoExplainUiState  by guaViewModel.getGuaExplainUiState.collectAsStateWithLifecycle()
+    val yaoUiState by guaViewModel.getYaoUIState.collectAsStateWithLifecycle()
     YaoScreen(
-        testClick = yaoViewModel::onSearchQueryChanged,
-        yaoChange = yaoViewModel::onYaoChanged,
-        yaoExplainUiState = yaoExplainUiState,
+        testClick = guaViewModel::onSearchQueryChanged,
+        yaoChange = guaViewModel::onYaoChanged,
+        guaExplainUiState = yaoExplainUiState,
         yaoUiState = yaoUiState
     )
 }
@@ -44,8 +40,8 @@ internal fun YaoScreenRoute(
 internal fun YaoScreen(
     testClick: (Int) -> Unit = {},
     yaoChange: (Int) -> Unit = {},
-    yaoExplainUiState: YaoExplainUiState = YaoExplainUiState.LoadFailed,
-    yaoUiState: YaoBaseUiState = YaoBaseUiState()
+    guaExplainUiState: GuaExplainUiState = GuaExplainUiState.LoadFailed,
+    yaoUiState: GuaBaseUiState = GuaBaseUiState()
 ) {
     Column(
         modifier = Modifier.background(Color(0xFF468E8D))
@@ -53,13 +49,13 @@ internal fun YaoScreen(
 
         LiuYao(30.dp, yaoChange, yaoUiState.yaos)
 
-        when(yaoExplainUiState){
-            YaoExplainUiState.Loading -> Text(text = "Loading")
-            YaoExplainUiState.LoadFailed  -> Text(text = "Fail")
-            is YaoExplainUiState.Success -> {
+        when(guaExplainUiState){
+            GuaExplainUiState.Loading -> Text(text = "Loading")
+            GuaExplainUiState.LoadFailed  -> Text(text = "Fail")
+            is GuaExplainUiState.Success -> {
                 Text(text = "Success")
-                Text(text = yaoExplainUiState.base)
-                Text(text = yaoExplainUiState.explain)
+                Text(text = guaExplainUiState.base)
+                Text(text = guaExplainUiState.explain)
             }
 
             else -> {}

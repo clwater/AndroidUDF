@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.clwater.androidudf.ui.theme.AndroidUDFTheme
-import com.clwater.androidudf.ui.yao.YaoScreenRoute
+import com.clwater.androidudf.core.theme.AndroidUDFTheme
+import com.clwater.androidudf.ui.gua.YaoScreenRoute
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

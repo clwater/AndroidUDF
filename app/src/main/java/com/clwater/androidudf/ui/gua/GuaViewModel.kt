@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalCoroutinesApi::class)
 
-package com.clwater.androidudf.ui.yao
+package com.clwater.androidudf.ui.gua
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.clwater.androidudf.core.result.asResult
 import com.clwater.androidudf.core.result.Result
 import com.clwater.androidudf.data.repository.DefaultDatabaseRepository
-import com.clwater.androidudf.domain.yao.GetYaoExplainUseCase
+import com.clwater.androidudf.domain.gua.GetGuaExplainUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,9 +20,9 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
-class YaoViewModel @Inject constructor(
+class GuaViewModel @Inject constructor(
     private val defaultDatabaseRepository: DefaultDatabaseRepository,
-    getYaoExplainUseCase: GetYaoExplainUseCase,
+    getGuaExplainUseCase: GetGuaExplainUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val searchQuery = savedStateHandle.getStateFlow(
@@ -36,45 +36,45 @@ class YaoViewModel @Inject constructor(
 
 
 
-    val getYaoUIState: StateFlow<YaoBaseUiState> =
+    val getYaoUIState: StateFlow<GuaBaseUiState> =
         currentYao.flatMapLatest { query ->
-            flowOf(YaoBaseUiState(query))
+            flowOf(GuaBaseUiState(query))
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
-            initialValue = YaoBaseUiState(),
+            initialValue = GuaBaseUiState(),
         )
 
-    val getYaoExplainUiState: StateFlow<YaoExplainUiState> =
+    val getGuaExplainUiState: StateFlow<GuaExplainUiState> =
         searchQuery.flatMapLatest { query ->
 
-            getYaoExplainUseCase(query)
+            getGuaExplainUseCase(query)
                 .asResult()
                 .map { result ->
                     when (result) {
                         is Result.Success ->
-                            if (YaoExplainUiState.Success(
+                            if (GuaExplainUiState.Success(
                                     result.data.base,
                                     result.data.explain
                                 ).isEmpty()
                             ) {
-                                YaoExplainUiState.LoadFailed
+                                GuaExplainUiState.LoadFailed
                             } else {
-                                YaoExplainUiState.Success(
+                                GuaExplainUiState.Success(
                                     result.data.base,
                                     result.data.explain
                                 )
                             }
 
-                        is Result.Loading -> YaoExplainUiState.Loading
-                        is Result.Error -> YaoExplainUiState.LoadFailed
+                        is Result.Loading -> GuaExplainUiState.Loading
+                        is Result.Error -> GuaExplainUiState.LoadFailed
                     }
                 }
         }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(),
-                initialValue = YaoExplainUiState.Loading,
+                initialValue = GuaExplainUiState.Loading,
             )
 
     fun initDatabase(){
