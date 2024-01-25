@@ -1,7 +1,7 @@
 package com.clwater.androidudf.core.utils
 
 import android.content.Context
-import com.clwater.androidudf.core.model.data.GuaModel
+import com.clwater.androidudf.core.model.GuaModel
 import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

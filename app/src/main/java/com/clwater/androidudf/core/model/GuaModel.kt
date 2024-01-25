@@ -1,4 +1,4 @@
-package com.clwater.androidudf.core.model.data
+package com.clwater.androidudf.core.model
 
 import com.clwater.androidudf.core.database.model.GuaEntity
 

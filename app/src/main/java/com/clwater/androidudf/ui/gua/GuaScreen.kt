@@ -48,6 +48,7 @@ internal fun YaoScreen(
     ) {
 
         LiuYao(30.dp, yaoChange, yaoUiState.yaos)
+        Text(text = yaoUiState.name)
 
         when(guaExplainUiState){
             GuaExplainUiState.Loading -> Text(text = "Loading")

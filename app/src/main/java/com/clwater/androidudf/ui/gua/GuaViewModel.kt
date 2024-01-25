@@ -8,13 +8,13 @@ import androidx.lifecycle.viewModelScope
 import com.clwater.androidudf.core.result.asResult
 import com.clwater.androidudf.core.result.Result
 import com.clwater.androidudf.data.repository.DefaultDatabaseRepository
+import com.clwater.androidudf.domain.gua.GetGuaBaseUseCase
 import com.clwater.androidudf.domain.gua.GetGuaExplainUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
@@ -23,6 +23,7 @@ import javax.inject.Inject
 class GuaViewModel @Inject constructor(
     private val defaultDatabaseRepository: DefaultDatabaseRepository,
     getGuaExplainUseCase: GetGuaExplainUseCase,
+    getGuaBaseUseCase: GetGuaBaseUseCase,
     private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val searchQuery = savedStateHandle.getStateFlow(
@@ -38,7 +39,10 @@ class GuaViewModel @Inject constructor(
 
     val getYaoUIState: StateFlow<GuaBaseUiState> =
         currentYao.flatMapLatest { query ->
-            flowOf(GuaBaseUiState(query))
+            getGuaBaseUseCase(query).map{ result ->
+                GuaBaseUiState(name = result.name, yaos = currentYao.value)
+            }
+
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
