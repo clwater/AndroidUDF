@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetGuaExplainUseCase @Inject constructor(
     private val guaRepository: GuaRepository
 ) {
-    operator fun invoke(index: Int): Flow<GuaExplainResult> =
+    suspend operator fun invoke(index: Int): Flow<GuaExplainResult> =
         guaRepository.getExplainInfo(index)
 }

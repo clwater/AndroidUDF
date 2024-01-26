@@ -45,7 +45,7 @@ class GuaViewModel @Inject constructor(
                     name = result.name,
                     yaos = currentYao.value,
                     detail = result.detail,
-                    title = "" + result.id + result.descGroup
+                    title = "" + result.id + ". " + result.descGroup
                     )
             }
 

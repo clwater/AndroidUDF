@@ -69,26 +69,27 @@ internal fun GuaScreen(
         ) {
 
             LiuYao(30.dp, yaoChange, yaoUiState.yaos)
-            Text(text = yaoUiState.name)
 
-            when (guaExplainUiState) {
-                GuaExplainUiState.Loading -> Text(text = "Loading")
-                GuaExplainUiState.LoadFailed -> Text(text = "Fail")
-                is GuaExplainUiState.Success -> {
-                    Text(text = "Success")
-                    Text(text = guaExplainUiState.base)
-                    Text(text = guaExplainUiState.explain)
+            Column(modifier = Modifier.weight(1f).padding(16.dp),
+                verticalArrangement = Arrangement.Bottom) {
+                when (guaExplainUiState) {
+                    GuaExplainUiState.Loading -> Text(color = Color(0xFF105150),
+                        text = "Loading...")
+                    GuaExplainUiState.LoadFailed -> Text(color = Color(0xFF105150),text = "Fail")
+                    is GuaExplainUiState.Success -> {
+//                        Text(text = "Success")
+                        Text(color = Color(0xFF105150),text = guaExplainUiState.base)
+                        Text(color = Color(0xFF105150),text = guaExplainUiState.explain)
+                    }
+
+                    else -> {}
                 }
 
-                else -> {}
             }
 
-            Button(onClick = { testClick(10) }) {
-                Text(text = "test")
-            }
 
             Column(
-                modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Bottom
+                modifier = Modifier, verticalArrangement = Arrangement.Bottom
             ) {
                 Text(
                     modifier = Modifier
