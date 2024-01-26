@@ -40,7 +40,13 @@ class GuaViewModel @Inject constructor(
     val getYaoUIState: StateFlow<GuaBaseUiState> =
         currentYao.flatMapLatest { query ->
             getGuaBaseUseCase(query).map{ result ->
-                GuaBaseUiState(name = result.name, yaos = currentYao.value)
+                GuaBaseUiState(
+                    id = result.id,
+                    name = result.name,
+                    yaos = currentYao.value,
+                    detail = result.detail,
+                    title = "" + result.id + result.descGroup
+                    )
             }
 
         }.stateIn(

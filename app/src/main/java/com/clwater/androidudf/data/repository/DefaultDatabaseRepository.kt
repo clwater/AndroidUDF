@@ -37,7 +37,7 @@ class DefaultDatabaseRepository @Inject constructor(
             images += if (it) "1" else "0"
         }
         val guaEntity = guaDao.getGuaByImage(images)
-        return flowOf(GuaBaseResult(guaEntity.name))
+        return flowOf(GuaBaseResult(guaEntity.id, guaEntity.name, guaEntity.detail, guaEntity.descGroup))
     }
 
 }

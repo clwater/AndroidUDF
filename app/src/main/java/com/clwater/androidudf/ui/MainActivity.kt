@@ -8,7 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.clwater.androidudf.core.theme.AndroidUDFTheme
-import com.clwater.androidudf.ui.gua.YaoScreenRoute
+import com.clwater.androidudf.ui.gua.GuaScreenRoute
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
             AndroidUDFTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    YaoScreenRoute()
+                    GuaScreenRoute()
                 }
             }
         }

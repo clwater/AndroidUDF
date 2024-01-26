@@ -2,5 +2,8 @@ package com.clwater.androidudf.core.model.data
 
 
 data class GuaBaseResult(
-    val name: String = ""
+    val id: Int = 0,
+    val name: String = "",
+    val detail: String = "",
+    val descGroup: String = ""
 )
