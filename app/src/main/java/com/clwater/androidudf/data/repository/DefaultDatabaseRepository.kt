@@ -1,5 +1,6 @@
 package com.clwater.androidudf.data.repository
 
+import android.util.Log
 import com.clwater.androidudf.core.database.dao.GuaDao
 import com.clwater.androidudf.core.database.model.GuaEntity
 import com.clwater.androidudf.core.model.data.GuaBaseResult
@@ -33,9 +34,10 @@ class DefaultDatabaseRepository @Inject constructor(
 
     override fun getGuaBaseInfo(imageList: List<Boolean>): Flow<GuaBaseResult> {
         var images = ""
-        imageList.map {
+        imageList.reversed().map {
             images += if (it) "1" else "0"
         }
+        Log.d("gzb", images)
         val guaEntity = guaDao.getGuaByImage(images)
         return flowOf(GuaBaseResult(guaEntity.id, guaEntity.name, guaEntity.detail, guaEntity.descGroup))
     }
